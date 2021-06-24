@@ -36,6 +36,7 @@ boardSpaces.forEach(function (row, rowIndex) {
 const snakeOccupiedSpaceStyle = "snake_occupied_space";
 const speedOfSnake = 100;
 let currentDirection = "";
+let bodyArrayCopy = [];
 let currentPosition,
   prevPosition,
   movLeftInterval,
@@ -54,7 +55,7 @@ class Snake {
   constructor(startingPosition) {
     this.currentHeadPosition = startingPosition;
     this.previousHeadPosition = "";
-    this.bodyArray = [this.currentHeadPosition];
+    this.bodyArray = [this.currentHeadPosition, "11-12"];
   }
 
   moveStyles() {
@@ -64,13 +65,6 @@ class Snake {
     document
       .getElementById(`${this.currentHeadPosition}`)
       .classList.add(snakeOccupiedSpaceStyle);
-
-    this.bodyArray.forEach(function (space, index) {
-      document.getElementById(space).classList.remove(snakeOccupiedSpaceStyle);
-      if (index !== 0) space = space[index - 1];
-      console.log(document.getElementById(`'${space}'`));
-      document.getElementById(space).classList.add(snakeOccupiedSpaceStyle);
-    });
   }
 
   checkForFood() {
@@ -86,39 +80,71 @@ class Snake {
     }
   }
 
+  moveBody() {
+    this.bodyArray.forEach(function (snake, index, array) {
+      if (index > 0) {
+        document
+          .getElementById(`${array[index]}`)
+          .classList.remove(snakeOccupiedSpaceStyle);
+        array[index] = bodyArrayCopy[index - 1];
+        document
+          .getElementById(`${array[index]}`)
+          .classList.add(snakeOccupiedSpaceStyle);
+      }
+    });
+
+    console.log(this.bodyArray);
+  }
+
   moveLeft() {
+    bodyArrayCopy = this.bodyArray.map((val) => val);
     this.previousHeadPosition = this.currentHeadPosition;
     const positionArray = this.currentHeadPosition.slice().split("-");
     +positionArray[1]++;
-    this.currentHeadPosition = positionArray[0] + "-" + positionArray[1];
+    this.currentHeadPosition = this.bodyArray[0] =
+      positionArray[0] + "-" + positionArray[1];
+
     this.moveStyles();
+    this.moveBody();
     this.checkForFood();
   }
 
   moveRight() {
+    bodyArrayCopy = this.bodyArray.map((val) => val);
     this.previousHeadPosition = this.currentHeadPosition;
     const positionArray = this.currentHeadPosition.slice().split("-");
     +positionArray[1]--;
-    this.currentHeadPosition = positionArray[0] + "-" + positionArray[1];
+    this.currentHeadPosition = this.bodyArray[0] =
+      positionArray[0] + "-" + positionArray[1];
+
     this.moveStyles();
+    this.moveBody();
     this.checkForFood();
   }
 
   moveUp() {
+    bodyArrayCopy = this.bodyArray.map((val) => val);
     this.previousHeadPosition = this.currentHeadPosition;
     const positionArray = this.currentHeadPosition.slice().split("-");
     +positionArray[0]++;
-    this.currentHeadPosition = positionArray[0] + "-" + positionArray[1];
+    this.currentHeadPosition = this.bodyArray[0] =
+      positionArray[0] + "-" + positionArray[1];
+
     this.moveStyles();
+    this.moveBody();
     this.checkForFood();
   }
 
   moveDown() {
+    bodyArrayCopy = this.bodyArray.map((val) => val);
     this.previousHeadPosition = this.currentHeadPosition;
     const positionArray = this.currentHeadPosition.slice().split("-");
     +positionArray[0]--;
-    this.currentHeadPosition = positionArray[0] + "-" + positionArray[1];
+    this.currentHeadPosition = this.bodyArray[0] =
+      positionArray[0] + "-" + positionArray[1];
+
     this.moveStyles();
+    this.moveBody();
     this.checkForFood();
   }
 }
