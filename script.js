@@ -34,6 +34,7 @@ boardSpaces.forEach(function (row, rowIndex) {
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
 const snakeOccupiedSpaceStyle = "snake_occupied_space";
+const foodOccupiedSpace = "food_occupied_space";
 const speedOfSnake = 100;
 let currentDirection = "";
 let bodyArrayCopy = [];
@@ -48,14 +49,14 @@ let currentPosition,
 let i = 1;
 let currentFoodPosition = "13-6";
 
-document.getElementById(currentFoodPosition).style.backgroundColor = "red";
+document.getElementById(currentFoodPosition).classList.add(foodOccupiedSpace);
 
 ///////////////////////////////////////////////////////////////////////////////////////
 class Snake {
   constructor(startingPosition) {
     this.currentHeadPosition = startingPosition;
     this.previousHeadPosition = "";
-    this.bodyArray = [this.currentHeadPosition, "11-12"];
+    this.bodyArray = [this.currentHeadPosition];
   }
 
   moveStyles() {
@@ -69,6 +70,9 @@ class Snake {
 
   checkForFood() {
     if (this.currentHeadPosition === currentFoodPosition) {
+      document
+        .getElementById(currentFoodPosition)
+        .classList.remove(foodOccupiedSpace);
       oldTail = this.bodyArray[this.bodyArray.length - 1];
       const positionArray = oldTail.slice().split("-");
       if (currentDirection === "up") +positionArray[0]--;
@@ -77,6 +81,13 @@ class Snake {
       if (currentDirection === "right") +positionArray[1]++;
       newTail = positionArray[0] + "-" + positionArray[1];
       this.bodyArray.push(newTail);
+      const foodPositionArray = currentFoodPosition.slice().split("-");
+      positionArray[0] = Math.round(Math.random() * 19);
+      positionArray[1] = Math.round(Math.random() * 19);
+      currentFoodPosition = positionArray[0] + "-" + positionArray[1];
+      document
+        .getElementById(currentFoodPosition)
+        .classList.add(foodOccupiedSpace);
     }
   }
 

@@ -23,3 +23,7 @@
 .snake_occupied_space {
   background-color: red;
 }
+
+.food_occupied_space {
+  background-color: rgb(4, 106, 238);
+}
