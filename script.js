@@ -59,6 +59,15 @@ class Snake {
     this.bodyArray = [this.currentHeadPosition];
   }
 
+  moveFoodPosition() {
+    do {
+      const positionArray = currentFoodPosition.slice().split("-");
+      positionArray[0] = Math.ceil(Math.random() * 19);
+      positionArray[1] = Math.ceil(Math.random() * 19);
+      currentFoodPosition = positionArray[0] + "-" + positionArray[1];
+    } while (this.bodyArray.includes(currentFoodPosition));
+  }
+
   moveStyles() {
     document
       .getElementById(`${this.previousHeadPosition}`)
@@ -81,10 +90,8 @@ class Snake {
       if (currentDirection === "right") +positionArray[1]++;
       newTail = positionArray[0] + "-" + positionArray[1];
       this.bodyArray.push(newTail);
-      const foodPositionArray = currentFoodPosition.slice().split("-");
-      positionArray[0] = Math.round(Math.random() * 19);
-      positionArray[1] = Math.round(Math.random() * 19);
-      currentFoodPosition = positionArray[0] + "-" + positionArray[1];
+      this.moveFoodPosition();
+      console.log(currentFoodPosition);
       document
         .getElementById(currentFoodPosition)
         .classList.add(foodOccupiedSpace);
@@ -112,12 +119,20 @@ class Snake {
     this.previousHeadPosition = this.currentHeadPosition;
     const positionArray = this.currentHeadPosition.slice().split("-");
     +positionArray[1]++;
-    this.currentHeadPosition = this.bodyArray[0] =
-      positionArray[0] + "-" + positionArray[1];
+    if (
+      snake.bodyArray.includes(positionArray[0] + "-" + positionArray[1]) ||
+      !document.getElementById(positionArray[0] + "-" + positionArray[1])
+    ) {
+      console.log("game over");
+      clearAllIntervals();
+    } else {
+      this.currentHeadPosition = this.bodyArray[0] =
+        positionArray[0] + "-" + positionArray[1];
 
-    this.moveStyles();
-    this.moveBody();
-    this.checkForFood();
+      this.moveStyles();
+      this.moveBody();
+      this.checkForFood();
+    }
   }
 
   moveRight() {
@@ -125,12 +140,20 @@ class Snake {
     this.previousHeadPosition = this.currentHeadPosition;
     const positionArray = this.currentHeadPosition.slice().split("-");
     +positionArray[1]--;
-    this.currentHeadPosition = this.bodyArray[0] =
-      positionArray[0] + "-" + positionArray[1];
+    if (
+      snake.bodyArray.includes(positionArray[0] + "-" + positionArray[1]) ||
+      !document.getElementById(positionArray[0] + "-" + positionArray[1])
+    ) {
+      console.log("game over");
+      clearAllIntervals();
+    } else {
+      this.currentHeadPosition = this.bodyArray[0] =
+        positionArray[0] + "-" + positionArray[1];
 
-    this.moveStyles();
-    this.moveBody();
-    this.checkForFood();
+      this.moveStyles();
+      this.moveBody();
+      this.checkForFood();
+    }
   }
 
   moveUp() {
@@ -138,12 +161,20 @@ class Snake {
     this.previousHeadPosition = this.currentHeadPosition;
     const positionArray = this.currentHeadPosition.slice().split("-");
     +positionArray[0]++;
-    this.currentHeadPosition = this.bodyArray[0] =
-      positionArray[0] + "-" + positionArray[1];
+    if (
+      snake.bodyArray.includes(positionArray[0] + "-" + positionArray[1]) ||
+      !document.getElementById(positionArray[0] + "-" + positionArray[1])
+    ) {
+      console.log("game over");
+      clearAllIntervals();
+    } else {
+      this.currentHeadPosition = this.bodyArray[0] =
+        positionArray[0] + "-" + positionArray[1];
 
-    this.moveStyles();
-    this.moveBody();
-    this.checkForFood();
+      this.moveStyles();
+      this.moveBody();
+      this.checkForFood();
+    }
   }
 
   moveDown() {
@@ -151,12 +182,20 @@ class Snake {
     this.previousHeadPosition = this.currentHeadPosition;
     const positionArray = this.currentHeadPosition.slice().split("-");
     +positionArray[0]--;
-    this.currentHeadPosition = this.bodyArray[0] =
-      positionArray[0] + "-" + positionArray[1];
+    if (
+      snake.bodyArray.includes(positionArray[0] + "-" + positionArray[1]) ||
+      !document.getElementById(positionArray[0] + "-" + positionArray[1])
+    ) {
+      console.log("game over");
+      clearAllIntervals();
+    } else {
+      this.currentHeadPosition = this.bodyArray[0] =
+        positionArray[0] + "-" + positionArray[1];
 
-    this.moveStyles();
-    this.moveBody();
-    this.checkForFood();
+      this.moveStyles();
+      this.moveBody();
+      this.checkForFood();
+    }
   }
 }
 
@@ -174,6 +213,14 @@ const clearUnusedIntervals = function () {
   if (currentDirection !== "down") clearInterval(movDownInterval);
 };
 
+// Clear all intervals
+const clearAllIntervals = function () {
+  clearInterval(movLeftInterval);
+  clearInterval(movRightInterval);
+  clearInterval(movUpInterval);
+  clearInterval(movDownInterval);
+};
+
 ///////////////////////////////////////////////////////////////////////////////////////
 //Game Play Event Listener
 
@@ -187,7 +234,7 @@ const movementEventListener = function (e) {
     clearUnusedIntervals();
     movLeftInterval = setInterval(() => {
       currentPosition = document.getElementById(snake.currentHeadPosition);
-      if (currentPosition) {
+      if (snake.currentHeadPosition) {
         snake.moveLeft();
       } else {
         console.log("Game over");
@@ -204,7 +251,7 @@ const movementEventListener = function (e) {
     clearUnusedIntervals();
     movRightInterval = setInterval(() => {
       currentPosition = document.getElementById(snake.currentHeadPosition);
-      if (currentPosition) {
+      if (snake.currentHeadPosition) {
         snake.moveRight();
       } else {
         console.log("Game over");
@@ -221,7 +268,7 @@ const movementEventListener = function (e) {
     clearUnusedIntervals();
     movUpInterval = setInterval(() => {
       currentPosition = document.getElementById(snake.currentHeadPosition);
-      if (currentPosition) {
+      if (snake.currentHeadPosition) {
         snake.moveUp();
       } else {
         console.log("Game over");
@@ -238,7 +285,7 @@ const movementEventListener = function (e) {
     clearUnusedIntervals();
     movDownInterval = setInterval(() => {
       currentPosition = document.getElementById(snake.currentHeadPosition);
-      if (currentPosition) {
+      if (snake.currentHeadPosition) {
         snake.moveDown();
       } else {
         console.log("Game over");
