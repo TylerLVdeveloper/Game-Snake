@@ -36,6 +36,8 @@ boardSpaces.forEach(function (row, rowIndex) {
 const snakeOccupiedSpaceStyle = "snake_occupied_space";
 const foodOccupiedSpace = "food_occupied_space";
 const speedOfSnake = 100;
+const currentScore = document.getElementById("current_score");
+const highScoreDisplay = document.getElementById("high_score");
 let currentDirection = "";
 let bodyArrayCopy = [];
 let currentPosition,
@@ -48,6 +50,8 @@ let currentPosition,
   oldTail;
 let i = 1;
 let currentFoodPosition = "13-6";
+let score = 0;
+let highScore = 0;
 
 document.getElementById(currentFoodPosition).classList.add(foodOccupiedSpace);
 
@@ -79,6 +83,9 @@ class Snake {
 
   checkForFood() {
     if (this.currentHeadPosition === currentFoodPosition) {
+      score++;
+      if (score > highScore) highScore = score;
+      updateScores();
       document
         .getElementById(currentFoodPosition)
         .classList.remove(foodOccupiedSpace);
@@ -91,7 +98,7 @@ class Snake {
       newTail = positionArray[0] + "-" + positionArray[1];
       this.bodyArray.push(newTail);
       this.moveFoodPosition();
-      console.log(currentFoodPosition);
+
       document
         .getElementById(currentFoodPosition)
         .classList.add(foodOccupiedSpace);
@@ -110,8 +117,6 @@ class Snake {
           .classList.add(snakeOccupiedSpaceStyle);
       }
     });
-
-    console.log(this.bodyArray);
   }
 
   moveLeft() {
@@ -123,7 +128,7 @@ class Snake {
       snake.bodyArray.includes(positionArray[0] + "-" + positionArray[1]) ||
       !document.getElementById(positionArray[0] + "-" + positionArray[1])
     ) {
-      clearAllIntervals();
+      resetGame();
     } else {
       this.currentHeadPosition = this.bodyArray[0] =
         positionArray[0] + "-" + positionArray[1];
@@ -143,7 +148,7 @@ class Snake {
       snake.bodyArray.includes(positionArray[0] + "-" + positionArray[1]) ||
       !document.getElementById(positionArray[0] + "-" + positionArray[1])
     ) {
-      clearAllIntervals();
+      resetGame();
     } else {
       this.currentHeadPosition = this.bodyArray[0] =
         positionArray[0] + "-" + positionArray[1];
@@ -163,7 +168,7 @@ class Snake {
       snake.bodyArray.includes(positionArray[0] + "-" + positionArray[1]) ||
       !document.getElementById(positionArray[0] + "-" + positionArray[1])
     ) {
-      clearAllIntervals();
+      resetGame();
     } else {
       this.currentHeadPosition = this.bodyArray[0] =
         positionArray[0] + "-" + positionArray[1];
@@ -183,7 +188,7 @@ class Snake {
       snake.bodyArray.includes(positionArray[0] + "-" + positionArray[1]) ||
       !document.getElementById(positionArray[0] + "-" + positionArray[1])
     ) {
-      clearAllIntervals();
+      resetGame();
     } else {
       this.currentHeadPosition = this.bodyArray[0] =
         positionArray[0] + "-" + positionArray[1];
@@ -201,6 +206,24 @@ const snake = new Snake("11-11");
 ///////////////////////////////////////////////////////////////////////////////////////
 //Game Functions
 
+const resetGame = function () {
+  snake.currentHeadPosition = "11-11";
+  snake.previousHeadPosition = "";
+  snake.bodyArray = [snake.currentHeadPosition];
+  currentDirection = "";
+  currentPosition = "";
+  prevPosition = "";
+  newTail = "";
+  oldTail = "";
+  score = 0;
+  clearAllIntervals();
+  updateScores();
+  // Reset board, remove snake body
+
+  //Prompt user to start new game
+  gamePlay();
+};
+
 // Clear all unused intervals
 const clearUnusedIntervals = function () {
   if (currentDirection !== "left") clearInterval(movLeftInterval);
@@ -216,7 +239,21 @@ const clearAllIntervals = function () {
   clearInterval(movUpInterval);
   clearInterval(movDownInterval);
   document.removeEventListener("keydown", movementEventListener);
-  console.log("game over");
+};
+
+// Update Scores
+const updateScores = function () {
+  currentScore.textContent = "";
+  highScoreDisplay.textContent = "";
+
+  currentScore.insertAdjacentHTML(
+    "beforeend",
+    `<h2>Current Score: </h2><p>${score}</p>`
+  );
+  highScoreDisplay.insertAdjacentHTML(
+    "beforeend",
+    `<h2>High Score: </h2><p>${highScore}</p>`
+  );
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -277,3 +314,4 @@ const gamePlay = function () {
 
 // Call game play function immediately
 gamePlay();
+updateScores();
