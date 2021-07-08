@@ -121,13 +121,8 @@ class Snake {
         .getElementById(currentFoodPosition)
         .classList.remove(foodOccupiedSpace);
       oldTail = this.bodyArray[this.bodyArray.length - 1];
-      const positionArray = oldTail.slice().split("-");
-      if (currentDirection === "up") +positionArray[0]--;
-      if (currentDirection === "down") +positionArray[0]++;
-      if (currentDirection === "left") +positionArray[1]--;
-      if (currentDirection === "right") +positionArray[1]++;
-      newTail = positionArray[0] + "-" + positionArray[1];
-      this.bodyArray.push(newTail);
+
+      this.bodyArray.push(oldTail);
       this.moveFoodPosition();
 
       document
@@ -137,7 +132,7 @@ class Snake {
   }
 
   moveBody() {
-    this.bodyArray.forEach(function (snake, index, array) {
+    this.bodyArray.forEach(function (_, index, array) {
       if (index > 0) {
         document
           .getElementById(`${array[index]}`)
