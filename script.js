@@ -33,13 +33,41 @@ boardSpaces.forEach(function (row, rowIndex) {
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
-const snakeOccupiedSpaceStyle = "snake_occupied_space";
 const foodOccupiedSpace = "food_occupied_space";
-const speedOfSnake = 100;
+const btnSelectedStyle = "btn_selected";
 const currentScore = document.getElementById("current_score");
 const highScoreDisplay = document.getElementById("high_score");
 const startBtn = document.getElementById("start_btn");
 const boardOverlay = document.getElementById("board_overlay");
+const gameBoard = document.getElementById("board_wrapper");
+
+// Theme Buttons
+const themeNeonBtn = document.getElementById("theme_neon");
+const themeClassicBtn = document.getElementById("theme_classic");
+const themeDesertBtn = document.getElementById("theme_desert");
+
+// Level Buttons
+const levelEasyBtn = document.getElementById("level_easy");
+const levelMediumBtn = document.getElementById("level_medium");
+const levelHardBtn = document.getElementById("level_hard");
+
+// Level Speeds
+const easy = 100;
+const medium = 70;
+const hard = 50;
+
+// Theme styles
+const classicSnakeStyle = "snake_occupied_space_classic";
+const neonSnakeStyle = "snake_occupied_space_neon";
+const desertSnakeStyle = "snake_occupied_space_desert";
+
+const classicBoardStyle = "classic_board_style";
+const neonBoardStyle = "neon_board_style";
+const desertBoardStyle = "desert_board_style";
+
+let gameBoardStyle = neonBoardStyle;
+let snakeOccupiedSpaceStyle = classicSnakeStyle;
+let speedOfSnake = easy;
 let currentDirection = "";
 let bodyArrayCopy = [];
 let currentPosition,
@@ -56,6 +84,7 @@ let score = 0;
 let highScore = 0;
 
 document.getElementById(currentFoodPosition).classList.add(foodOccupiedSpace);
+gameBoard.classList.add(classicBoardStyle);
 
 ///////////////////////////////////////////////////////////////////////////////////////
 class Snake {
@@ -263,6 +292,72 @@ const updateScores = function () {
     `<h2>High Score: </h2><p>${highScore}</p>`
   );
 };
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// Difficulty Menu Event Listeners
+levelEasyBtn.addEventListener("click", function () {
+  speedOfSnake = easy;
+  // Change btn styles
+  levelEasyBtn.classList.add(btnSelectedStyle);
+  levelMediumBtn.classList.remove(btnSelectedStyle);
+  levelHardBtn.classList.remove(btnSelectedStyle);
+});
+levelMediumBtn.addEventListener("click", function () {
+  speedOfSnake = medium;
+  // Change btn styles
+  levelMediumBtn.classList.add(btnSelectedStyle);
+  levelEasyBtn.classList.remove(btnSelectedStyle);
+  levelHardBtn.classList.remove(btnSelectedStyle);
+});
+levelHardBtn.addEventListener("click", function () {
+  speedOfSnake = hard;
+  // Change btn styles
+  levelHardBtn.classList.add(btnSelectedStyle);
+  levelMediumBtn.classList.remove(btnSelectedStyle);
+  levelEasyBtn.classList.remove(btnSelectedStyle);
+});
+
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+// Theme Menu Event Listeners
+themeClassicBtn.addEventListener("click", function () {
+  snakeOccupiedSpaceStyle = classicSnakeStyle;
+
+  // Change button styles
+  themeClassicBtn.classList.add(btnSelectedStyle);
+  themeNeonBtn.classList.remove(btnSelectedStyle);
+  themeDesertBtn.classList.remove(btnSelectedStyle);
+
+  gameBoard.classList.remove(neonBoardStyle);
+  gameBoard.classList.add(classicBoardStyle);
+  gameBoard.classList.remove(desertBoardStyle);
+});
+
+themeNeonBtn.addEventListener("click", function () {
+  snakeOccupiedSpaceStyle = neonSnakeStyle;
+
+  // Change button styles
+  themeClassicBtn.classList.remove(btnSelectedStyle);
+  themeNeonBtn.classList.add(btnSelectedStyle);
+  themeDesertBtn.classList.remove(btnSelectedStyle);
+
+  gameBoard.classList.add(neonBoardStyle);
+  gameBoard.classList.remove(classicBoardStyle);
+  gameBoard.classList.remove(desertBoardStyle);
+});
+
+themeDesertBtn.addEventListener("click", function () {
+  snakeOccupiedSpaceStyle = desertSnakeStyle;
+
+  // Change button styles
+  themeClassicBtn.classList.remove(btnSelectedStyle);
+  themeNeonBtn.classList.remove(btnSelectedStyle);
+  themeDesertBtn.classList.add(btnSelectedStyle);
+
+  gameBoard.classList.remove(neonBoardStyle);
+  gameBoard.classList.remove(classicBoardStyle);
+  gameBoard.classList.add(desertBoardStyle);
+});
 
 ///////////////////////////////////////////////////////////////////////////////////////
 //Game Play Event Listener
@@ -325,3 +420,5 @@ startBtn.addEventListener("click", function () {
   updateScores();
   boardOverlay.style.display = "none";
 });
+
+updateScores();

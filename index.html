@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
 
     <title>Snake</title>
   </head>
@@ -19,7 +25,25 @@
 
     <div id="board_wrapper">
       <div id="board_overlay">
-        <div id="start_btn">Start</div>
+        <div id="start_btn_container">
+          <div id="start_btn">Start</div>
+        </div>
+        <div id="main_container">
+          <div class="menu_title">Difficulty</div>
+          <div class="menu_section">
+            <div class="menu_option btn_selected" id="level_easy">Easy</div>
+            <div class="menu_option" id="level_medium">Medium</div>
+            <div class="menu_option" id="level_hard">Hard</div>
+          </div>
+          <div class="menu_title">Theme</div>
+          <div class="menu_section">
+            <div class="menu_option" id="theme_neon">Neon Night</div>
+            <div class="menu_option btn_selected" id="theme_classic">
+              Classic
+            </div>
+            <div class="menu_option" id="theme_desert">Desert Red</div>
+          </div>
+        </div>
       </div>
       <div id="board"></div>
     </div>
