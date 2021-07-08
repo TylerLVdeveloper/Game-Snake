@@ -38,6 +38,8 @@ const foodOccupiedSpace = "food_occupied_space";
 const speedOfSnake = 100;
 const currentScore = document.getElementById("current_score");
 const highScoreDisplay = document.getElementById("high_score");
+const startBtn = document.getElementById("start_btn");
+const boardOverlay = document.getElementById("board_overlay");
 let currentDirection = "";
 let bodyArrayCopy = [];
 let currentPosition,
@@ -219,9 +221,15 @@ const resetGame = function () {
   clearAllIntervals();
   updateScores();
   // Reset board, remove snake body
-
+  boardSpaces.forEach(function (row, rowIndex) {
+    row.forEach(function (space) {
+      document
+        .getElementById(`${rowIndex + 1}-${space}`)
+        .classList.remove(snakeOccupiedSpaceStyle);
+    });
+  });
   //Prompt user to start new game
-  gamePlay();
+  boardOverlay.style.display = "block";
 };
 
 // Clear all unused intervals
@@ -312,6 +320,8 @@ const gamePlay = function () {
   document.addEventListener("keydown", movementEventListener);
 };
 
-// Call game play function immediately
-gamePlay();
-updateScores();
+startBtn.addEventListener("click", function () {
+  gamePlay();
+  updateScores();
+  boardOverlay.style.display = "none";
+});
