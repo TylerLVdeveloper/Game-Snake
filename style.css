@@ -1,5 +1,5 @@
 body {
-  font-family: "Press Start 2P", cursive;
+  font-family: "Tourney", cursive;
 }
 
 #board_wrapper {
@@ -8,18 +8,6 @@ body {
   display: block;
   margin-left: auto;
   margin-right: auto;
-}
-
-.classic_board_style {
-  background-color: white;
-}
-
-.neon_board_style {
-  background-color: rgb(138, 0, 236);
-}
-
-.desert_board_style {
-  background-color: rgb(133, 0, 0);
 }
 
 #board_overlay {
@@ -47,12 +35,12 @@ body {
 }
 
 .menu_title {
-  font-size: 1.5vw;
+  font-size: 1.75vw;
   margin-bottom: 5%;
 }
 
 .menu_option {
-  font-size: 1vw;
+  font-size: 1.2vw;
   padding: 5%;
   background-color: grey;
   margin-left: 10%;
@@ -86,7 +74,7 @@ body {
   margin-right: auto;
   padding: 1%;
   border-radius: 5%;
-  font-size: 2vw;
+  font-size: 3.5vw;
   transition: background-color 0.8s;
 }
 
@@ -124,6 +112,18 @@ body {
   background-color: rgb(1, 255, 179);
 }
 
+.classic_board_style {
+  background-color: white;
+}
+
+.neon_board_style {
+  background: linear-gradient(to bottom right, #0000ff 0%, #6600cc 59%);
+}
+
+.desert_board_style {
+  background: linear-gradient(to bottom right, #ff9933 0%, #cc0000 68%);
+}
+
 #top_display_wrapper {
   width: 30vw;
   height: 10vw;
@@ -141,7 +141,11 @@ body {
   grid-template-rows: 50% 50%;
   box-shadow: 0px 20px 100px grey;
   text-align: center;
-  font-size: 0.7vw;
+  font-size: 1vw;
+}
+
+#top_display p {
+  font-size: 2vw;
 }
 
 #current_score {
@@ -150,4 +154,102 @@ body {
 
 #high_score {
   color: white;
+}
+
+@media only screen and (max-width: 1200px) {
+  #board_wrapper {
+    width: 90vw;
+    height: 90vw;
+  }
+
+  #board_overlay {
+    position: absolute;
+    width: 90vw;
+    height: 90vw;
+  }
+
+  #top_display_wrapper {
+    width: 90vw;
+    height: 30vw;
+  }
+
+  #top_display {
+    font-size: 3.5vw;
+  }
+
+  #top_display p {
+    font-size: 7vw;
+  }
+
+  #start_btn {
+    font-size: 15vw;
+  }
+
+  #start_btn_container {
+    margin-bottom: 15%;
+  }
+
+  .menu_title {
+    font-size: 6vw;
+    margin-bottom: 5%;
+  }
+
+  .menu_option {
+    font-size: 3.5vw;
+    padding: 5%;
+    background-color: grey;
+    margin-left: 10%;
+    margin-right: 10%;
+    border-radius: 3px;
+    transition: background-color 0.8s;
+  }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1500px) {
+  #board_wrapper {
+    width: 60vw;
+    height: 60vw;
+  }
+
+  #board_overlay {
+    position: absolute;
+    width: 60vw;
+    height: 60vw;
+  }
+
+  #top_display_wrapper {
+    width: 60vw;
+    height: 15vw;
+  }
+
+  #top_display {
+    font-size: 2vw;
+  }
+
+  #top_display p {
+    font-size: 3vw;
+  }
+
+  #start_btn {
+    font-size: 8vw;
+  }
+
+  #start_btn_container {
+    margin-bottom: 15%;
+  }
+
+  .menu_title {
+    font-size: 3.5vw;
+    margin-bottom: 5%;
+  }
+
+  .menu_option {
+    font-size: 2vw;
+    padding: 5%;
+    background-color: grey;
+    margin-left: 10%;
+    margin-right: 10%;
+    border-radius: 3px;
+    transition: background-color 0.8s;
+  }
 }

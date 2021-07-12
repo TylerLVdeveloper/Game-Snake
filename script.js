@@ -121,7 +121,7 @@ const startBtn = document.getElementById("start_btn");
 const boardOverlay = document.getElementById("board_overlay");
 const gameBoard = document.getElementById("board_wrapper");
 
-// Theme Buttons
+// Color Theme Buttons
 const themeNeonBtn = document.getElementById("theme_neon");
 const themeClassicBtn = document.getElementById("theme_classic");
 const themeDesertBtn = document.getElementById("theme_desert");
@@ -157,7 +157,8 @@ let currentPosition,
   movDownInterval,
   movUpInterval,
   newTail,
-  oldTail;
+  oldTail,
+  prevDirection;
 let i = 1;
 let currentFoodPosition = "13-6";
 let score = 0;
@@ -230,12 +231,19 @@ class Snake {
     this.previousHeadPosition = this.currentHeadPosition;
     const positionArray = this.currentHeadPosition.slice().split("-");
     +positionArray[1]++;
-    if (
+    // If player hits direction keys too close together, this prevents snake from running backwards into itself and causing game over
+    if (snake.bodyArray[1] === positionArray[0] + "-" + positionArray[1]) {
+      clearAllIntervals();
+      resumePrevCourse();
+      // If snake runs into itself or outside of border
+    } else if (
       snake.bodyArray.includes(positionArray[0] + "-" + positionArray[1]) ||
       !document.getElementById(positionArray[0] + "-" + positionArray[1])
     ) {
       resetGame();
+      // If snake goes into valid space
     } else {
+      prevDirection = "left";
       this.currentHeadPosition = this.bodyArray[0] =
         positionArray[0] + "-" + positionArray[1];
 
@@ -250,12 +258,19 @@ class Snake {
     this.previousHeadPosition = this.currentHeadPosition;
     const positionArray = this.currentHeadPosition.slice().split("-");
     +positionArray[1]--;
-    if (
+    // If player hits direction keys too close together, this prevents snake from running backwards into itself and causing game over
+    if (snake.bodyArray[1] === positionArray[0] + "-" + positionArray[1]) {
+      clearAllIntervals();
+      resumePrevCourse();
+      // If snake runs into itself or outside of border
+    } else if (
       snake.bodyArray.includes(positionArray[0] + "-" + positionArray[1]) ||
       !document.getElementById(positionArray[0] + "-" + positionArray[1])
     ) {
       resetGame();
+      // If snake goes into valid space
     } else {
+      prevDirection = "right";
       this.currentHeadPosition = this.bodyArray[0] =
         positionArray[0] + "-" + positionArray[1];
 
@@ -270,12 +285,19 @@ class Snake {
     this.previousHeadPosition = this.currentHeadPosition;
     const positionArray = this.currentHeadPosition.slice().split("-");
     +positionArray[0]++;
-    if (
+    // If player hits direction keys too close together, this prevents snake from running backwards into itself and causing game over
+    if (snake.bodyArray[1] === positionArray[0] + "-" + positionArray[1]) {
+      clearAllIntervals();
+      resumePrevCourse();
+      // If snake runs into itself or outside of border
+    } else if (
       snake.bodyArray.includes(positionArray[0] + "-" + positionArray[1]) ||
       !document.getElementById(positionArray[0] + "-" + positionArray[1])
     ) {
       resetGame();
+      // If snake goes into valid space
     } else {
+      prevDirection = "up";
       this.currentHeadPosition = this.bodyArray[0] =
         positionArray[0] + "-" + positionArray[1];
 
@@ -290,12 +312,19 @@ class Snake {
     this.previousHeadPosition = this.currentHeadPosition;
     const positionArray = this.currentHeadPosition.slice().split("-");
     +positionArray[0]--;
-    if (
+    // If player hits direction keys too close together, this prevents snake from running backwards into itself and causing game over
+    if (snake.bodyArray[1] === positionArray[0] + "-" + positionArray[1]) {
+      clearAllIntervals();
+      resumePrevCourse();
+      // If snake runs into itself or outside of border
+    } else if (
       snake.bodyArray.includes(positionArray[0] + "-" + positionArray[1]) ||
       !document.getElementById(positionArray[0] + "-" + positionArray[1])
     ) {
       resetGame();
+      // If snake goes into valid space
     } else {
+      prevDirection = "down";
       this.currentHeadPosition = this.bodyArray[0] =
         positionArray[0] + "-" + positionArray[1];
 
@@ -334,6 +363,42 @@ const resetGame = function () {
   });
   //Prompt user to start new game
   boardOverlay.style.display = "block";
+};
+
+const resumePrevCourse = function () {
+  if (prevDirection === "left") {
+    currentDirection = "left";
+    clearUnusedIntervals();
+    movLeftInterval = setInterval(() => {
+      currentPosition = document.getElementById(snake.currentHeadPosition);
+      snake.moveLeft();
+    }, speedOfSnake);
+  }
+  if (prevDirection === "right") {
+    currentDirection = "right";
+    clearUnusedIntervals();
+    movRightInterval = setInterval(() => {
+      currentPosition = document.getElementById(snake.currentHeadPosition);
+      snake.moveRight();
+    }, speedOfSnake);
+  }
+  if (prevDirection === "up") {
+    currentDirection = "up";
+    clearUnusedIntervals();
+    movUpInterval = setInterval(() => {
+      currentPosition = document.getElementById(snake.currentHeadPosition);
+      snake.moveUp();
+    }, speedOfSnake);
+  }
+  if (prevDirection === "down") {
+    currentDirection = "down";
+    clearUnusedIntervals();
+    movDownInterval = setInterval(() => {
+      currentPosition = document.getElementById(snake.currentHeadPosition);
+      snake.moveDown();
+    }, speedOfSnake);
+  }
+  gamePlay();
 };
 
 // Clear all unused intervals
@@ -394,7 +459,7 @@ levelHardBtn.addEventListener("click", function () {
 
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
-// Theme Menu Event Listeners
+// Color Theme Menu Event Listeners
 themeClassicBtn.addEventListener("click", function () {
   snakeOccupiedSpaceStyle = classicSnakeStyle;
 
@@ -434,6 +499,8 @@ themeDesertBtn.addEventListener("click", function () {
   gameBoard.classList.add(desertBoardStyle);
 });
 
+///////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////
 //Game Play Event Listener
 
@@ -490,10 +557,13 @@ const gamePlay = function () {
   document.addEventListener("keydown", movementEventListener);
 };
 
+// Start button clicked
 startBtn.addEventListener("click", function () {
   gamePlay();
   updateScores();
+  // hide menu overlay
   boardOverlay.style.display = "none";
 });
 
+//Immediately update scores
 updateScores();
