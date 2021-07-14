@@ -120,6 +120,7 @@ const highScoreDisplay = document.getElementById("high_score");
 const startBtn = document.getElementById("start_btn");
 const boardOverlay = document.getElementById("board_overlay");
 const gameBoard = document.getElementById("board_wrapper");
+const mobileControlBoard = document.getElementById("controls_container");
 
 // Color Theme Buttons
 const themeNeonBtn = document.getElementById("theme_neon");
@@ -367,36 +368,16 @@ const resetGame = function () {
 
 const resumePrevCourse = function () {
   if (prevDirection === "left") {
-    currentDirection = "left";
-    clearUnusedIntervals();
-    movLeftInterval = setInterval(() => {
-      currentPosition = document.getElementById(snake.currentHeadPosition);
-      snake.moveLeft();
-    }, speedOfSnake);
+    leftMovement();
   }
   if (prevDirection === "right") {
-    currentDirection = "right";
-    clearUnusedIntervals();
-    movRightInterval = setInterval(() => {
-      currentPosition = document.getElementById(snake.currentHeadPosition);
-      snake.moveRight();
-    }, speedOfSnake);
+    rightMovement();
   }
   if (prevDirection === "up") {
-    currentDirection = "up";
-    clearUnusedIntervals();
-    movUpInterval = setInterval(() => {
-      currentPosition = document.getElementById(snake.currentHeadPosition);
-      snake.moveUp();
-    }, speedOfSnake);
+    upMovement();
   }
   if (prevDirection === "down") {
-    currentDirection = "down";
-    clearUnusedIntervals();
-    movDownInterval = setInterval(() => {
-      currentPosition = document.getElementById(snake.currentHeadPosition);
-      snake.moveDown();
-    }, speedOfSnake);
+    downMovement();
   }
   gamePlay();
 };
@@ -431,6 +412,42 @@ const updateScores = function () {
     "beforeend",
     `<h2>High Score: </h2><p>${highScore}</p>`
   );
+};
+
+const leftMovement = function () {
+  currentDirection = "left";
+  clearUnusedIntervals();
+  movLeftInterval = setInterval(() => {
+    currentPosition = document.getElementById(snake.currentHeadPosition);
+    snake.moveLeft();
+  }, speedOfSnake);
+};
+
+const rightMovement = function () {
+  currentDirection = "right";
+  clearUnusedIntervals();
+  movRightInterval = setInterval(() => {
+    currentPosition = document.getElementById(snake.currentHeadPosition);
+    snake.moveRight();
+  }, speedOfSnake);
+};
+
+const upMovement = function () {
+  currentDirection = "up";
+  clearUnusedIntervals();
+  movUpInterval = setInterval(() => {
+    currentPosition = document.getElementById(snake.currentHeadPosition);
+    snake.moveUp();
+  }, speedOfSnake);
+};
+
+const downMovement = function () {
+  currentDirection = "down";
+  clearUnusedIntervals();
+  movDownInterval = setInterval(() => {
+    currentPosition = document.getElementById(snake.currentHeadPosition);
+    snake.moveDown();
+  }, speedOfSnake);
 };
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
@@ -502,7 +519,7 @@ themeDesertBtn.addEventListener("click", function () {
 ///////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////
-//Game Play Event Listener
+//Game Play Event Listener - ARROW KEYS for Desktop View
 
 const movementEventListener = function (e) {
   if (
@@ -510,53 +527,71 @@ const movementEventListener = function (e) {
     currentDirection !== "left" &&
     currentDirection !== "right"
   ) {
-    currentDirection = "left";
-    clearUnusedIntervals();
-    movLeftInterval = setInterval(() => {
-      currentPosition = document.getElementById(snake.currentHeadPosition);
-      snake.moveLeft();
-    }, speedOfSnake);
+    leftMovement();
   } else if (
     e.code === "ArrowRight" &&
     currentDirection !== "right" &&
     currentDirection !== "left"
   ) {
-    currentDirection = "right";
-    clearUnusedIntervals();
-    movRightInterval = setInterval(() => {
-      currentPosition = document.getElementById(snake.currentHeadPosition);
-      snake.moveRight();
-    }, speedOfSnake);
+    rightMovement();
   } else if (
     e.code === "ArrowUp" &&
     currentDirection !== "up" &&
     currentDirection !== "down"
   ) {
-    currentDirection = "up";
-    clearUnusedIntervals();
-    movUpInterval = setInterval(() => {
-      currentPosition = document.getElementById(snake.currentHeadPosition);
-      snake.moveUp();
-    }, speedOfSnake);
+    upMovement();
   } else if (
     e.code === "ArrowDown" &&
     currentDirection !== "down" &&
     currentDirection !== "up"
   ) {
-    currentDirection = "down";
-    clearUnusedIntervals();
-    movDownInterval = setInterval(() => {
-      currentPosition = document.getElementById(snake.currentHeadPosition);
-      snake.moveDown();
-    }, speedOfSnake);
+    downMovement();
   }
 };
+
+//Game Play Event Listener - TOUCHSCREEN ARROWS for Mobile View
+const mobileMovementEventListener = function (e) {
+  if (
+    e.target.id === "left_arrow" &&
+    currentDirection !== "left" &&
+    currentDirection !== "right"
+  ) {
+    leftMovement();
+  } else if (
+    e.target.id === "right_arrow" &&
+    currentDirection !== "right" &&
+    currentDirection !== "left"
+  ) {
+    rightMovement();
+  } else if (
+    e.target.id === "up_arrow" &&
+    currentDirection !== "up" &&
+    currentDirection !== "down"
+  ) {
+    upMovement();
+  } else if (
+    e.target.id === "down_arrow" &&
+    currentDirection !== "down" &&
+    currentDirection !== "up"
+  ) {
+    downMovement();
+  }
+};
+
+///////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
 // Start game function expression
 const gamePlay = function () {
   document.addEventListener("keydown", movementEventListener);
+  mobileControlBoard.addEventListener(
+    "touchstart",
+    mobileMovementEventListener
+  );
 };
 
+///////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 // Start button clicked
 startBtn.addEventListener("click", function () {
   gamePlay();

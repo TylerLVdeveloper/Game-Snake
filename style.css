@@ -156,6 +156,10 @@ body {
   color: white;
 }
 
+#controls_wrapper {
+  display: none;
+}
+
 @media only screen and (max-width: 1200px) {
   #board_wrapper {
     width: 90vw;
@@ -202,6 +206,59 @@ body {
     margin-right: 10%;
     border-radius: 3px;
     transition: background-color 0.8s;
+  }
+
+  #controls_wrapper {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 5px;
+    float: left;
+    background-color: none;
+  }
+
+  #controls_container {
+    width: 90vw;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: none;
+  }
+
+  #double_arrow {
+    width: 60vw;
+    height: auto;
+    display: grid;
+    grid-template-columns: 33.3% 33.3% 33.3%;
+    grid-template-rows: 100%;
+    margin-left: 15vw;
+  }
+  .single_arrow {
+    width: 100%;
+    height: auto;
+  }
+
+  #up_arrow {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #down_arrow {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #center_arrow {
+    background-color: white;
+  }
+
+  .arrow {
+    height: 20vw;
+    width: 20vw;
+    background-color: purple;
   }
 }
 
