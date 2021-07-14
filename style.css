@@ -139,7 +139,6 @@ body {
   display: grid;
   grid-template-columns: 50% 50%;
   grid-template-rows: 50% 50%;
-  box-shadow: 0px 20px 100px grey;
   text-align: center;
   font-size: 1vw;
 }
@@ -160,7 +159,10 @@ body {
   display: none;
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 600px) {
+  #board {
+    box-shadow: none;
+  }
   #board_wrapper {
     width: 90vw;
     height: 90vw;
@@ -227,6 +229,12 @@ body {
     background-color: none;
   }
 
+  #controls_container img {
+    margin: 25%;
+    width: 50%;
+    height: 50%;
+  }
+
   #double_arrow {
     width: 60vw;
     height: auto;
@@ -244,39 +252,58 @@ body {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    box-shadow: 10px 2px 10px rgb(146, 146, 146);
   }
 
   #down_arrow {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    box-shadow: 10px 2px 10px grey;
+  }
+
+  #right_arrow {
+    box-shadow: 10px 2px 10px grey;
+  }
+
+  #left_arrow {
+    box-shadow: 10px 2px 10px grey;
   }
 
   #center_arrow {
-    background-color: white;
+    background-color: rgb(87, 87, 87);
+    border-radius: 10%;
   }
 
   .arrow {
     height: 20vw;
     width: 20vw;
-    background-color: purple;
+    background-color: rgb(199, 199, 199);
+    border-radius: 10%;
+  }
+
+  .arrow:active {
+    background-color: rgb(80, 80, 80);
   }
 }
 
-@media only screen and (min-width: 1200px) and (max-width: 1500px) {
+/* @media only screen and (min-width: 601px) and (max-width: 1200px) {
+  #board {
+    box-shadow: none;
+  }
   #board_wrapper {
-    width: 60vw;
-    height: 60vw;
+    width: 70vw;
+    height: 70vw;
   }
 
   #board_overlay {
     position: absolute;
-    width: 60vw;
-    height: 60vw;
+    width: 70vw;
+    height: 70vw;
   }
 
   #top_display_wrapper {
-    width: 60vw;
+    width: 70vw;
     height: 15vw;
   }
 
@@ -310,4 +337,79 @@ body {
     border-radius: 3px;
     transition: background-color 0.8s;
   }
-}
+
+  #controls_wrapper {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 5px;
+    float: left;
+    background-color: none;
+  }
+
+  #controls_container {
+    width: 90vw;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: none;
+  }
+
+  #controls_container img {
+    margin: 25%;
+    width: 50%;
+    height: 50%;
+  }
+
+  #double_arrow {
+    width: 36vw;
+    height: auto;
+    display: grid;
+    grid-template-columns: 33.3% 33.3% 33.3%;
+    grid-template-rows: 100%;
+    margin-left: 27vw;
+  }
+  .single_arrow {
+    width: 100%;
+    height: auto;
+  }
+
+  #up_arrow {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 10px 2px 10px rgb(146, 146, 146);
+  }
+
+  #down_arrow {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 10px 2px 10px grey;
+  }
+
+  #right_arrow {
+    box-shadow: 10px 2px 10px grey;
+  }
+
+  #left_arrow {
+    box-shadow: 10px 2px 10px grey;
+  }
+
+  #center_arrow {
+    background-color: rgb(87, 87, 87);
+    border-radius: 10%;
+  }
+
+  .arrow {
+    height: 12vw;
+    width: 12vw;
+    background-color: rgb(199, 199, 199);
+    border-radius: 10%;
+  }
+
+  .arrow:active {
+    background-color: rgb(80, 80, 80);
+  }
+} */
