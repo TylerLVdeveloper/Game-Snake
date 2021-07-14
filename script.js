@@ -397,6 +397,7 @@ const clearAllIntervals = function () {
   clearInterval(movUpInterval);
   clearInterval(movDownInterval);
   document.removeEventListener("keydown", movementEventListener);
+  mobileControlBoard.removeEventListener("click", mobileMovementEventListener);
 };
 
 // Update Scores
@@ -584,10 +585,7 @@ const mobileMovementEventListener = function (e) {
 // Start game function expression
 const gamePlay = function () {
   document.addEventListener("keydown", movementEventListener);
-  mobileControlBoard.addEventListener(
-    "touchstart",
-    mobileMovementEventListener
-  );
+  mobileControlBoard.addEventListener("click", mobileMovementEventListener);
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////
