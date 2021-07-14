@@ -422,6 +422,9 @@ const updateScores = function () {
 };
 
 const leftMovement = function () {
+  // hide menu overlay
+  boardOverlay.style.display = "none";
+
   currentDirection = "left";
   clearUnusedIntervals();
   movLeftInterval = setInterval(() => {
@@ -431,6 +434,9 @@ const leftMovement = function () {
 };
 
 const rightMovement = function () {
+  // hide menu overlay
+  boardOverlay.style.display = "none";
+
   currentDirection = "right";
   clearUnusedIntervals();
   movRightInterval = setInterval(() => {
@@ -440,6 +446,9 @@ const rightMovement = function () {
 };
 
 const upMovement = function () {
+  // hide menu overlay
+  boardOverlay.style.display = "none";
+
   currentDirection = "up";
   clearUnusedIntervals();
   movUpInterval = setInterval(() => {
@@ -449,6 +458,9 @@ const upMovement = function () {
 };
 
 const downMovement = function () {
+  // hide menu overlay
+  boardOverlay.style.display = "none";
+
   currentDirection = "down";
   clearUnusedIntervals();
   movDownInterval = setInterval(() => {
@@ -529,9 +541,6 @@ themeDesertBtn.addEventListener("click", function () {
 //Game Play Event Listener - ARROW KEYS for Desktop View
 
 const movementEventListener = function (e) {
-  // hide menu overlay
-  boardOverlay.style.display = "none";
-
   if (
     e.code === "ArrowLeft" &&
     currentDirection !== "left" &&
@@ -561,9 +570,6 @@ const movementEventListener = function (e) {
 
 //Game Play Event Listener - TOUCHSCREEN ARROWS for Mobile View
 const mobileMovementEventListener = function (e) {
-  // hide menu overlay
-  boardOverlay.style.display = "none";
-
   let arrowSelected;
   if (e.target.classList.contains("arrowImg")) {
     arrowSelected = e.target.parentElement.id;
