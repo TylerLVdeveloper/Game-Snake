@@ -117,7 +117,6 @@ const foodOccupiedSpace = "food_occupied_space";
 const btnSelectedStyle = "btn_selected";
 const currentScore = document.getElementById("current_score");
 const highScoreDisplay = document.getElementById("high_score");
-const startBtn = document.getElementById("start_btn");
 const boardOverlay = document.getElementById("board_overlay");
 const gameBoard = document.getElementById("board_wrapper");
 const mobileControlBoard = document.getElementById("controls_container");
@@ -165,7 +164,10 @@ let currentFoodPosition = "13-6";
 let score = 0;
 let highScore = 0;
 
+// Immediately add snake food
 document.getElementById(currentFoodPosition).classList.add(foodOccupiedSpace);
+
+// Begin w/ Classic board style
 gameBoard.classList.add(classicBoardStyle);
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -185,6 +187,7 @@ class Snake {
     } while (this.bodyArray.includes(currentFoodPosition));
   }
 
+  // Move styles for snake head
   moveStyles() {
     document
       .getElementById(`${this.previousHeadPosition}`)
@@ -364,6 +367,9 @@ const resetGame = function () {
   });
   //Prompt user to start new game
   boardOverlay.style.display = "block";
+
+  // Start game
+  gamePlay();
 };
 
 const resumePrevCourse = function () {
@@ -523,6 +529,9 @@ themeDesertBtn.addEventListener("click", function () {
 //Game Play Event Listener - ARROW KEYS for Desktop View
 
 const movementEventListener = function (e) {
+  // hide menu overlay
+  boardOverlay.style.display = "none";
+
   if (
     e.code === "ArrowLeft" &&
     currentDirection !== "left" &&
@@ -552,26 +561,35 @@ const movementEventListener = function (e) {
 
 //Game Play Event Listener - TOUCHSCREEN ARROWS for Mobile View
 const mobileMovementEventListener = function (e) {
+  // hide menu overlay
+  boardOverlay.style.display = "none";
+
+  let arrowSelected;
+  if (e.target.classList.contains("arrowImg")) {
+    arrowSelected = e.target.parentElement.id;
+  } else {
+    arrowSelected = e.target.id;
+  }
   if (
-    e.target.id === "left_arrow" &&
+    arrowSelected === "left_arrow" &&
     currentDirection !== "left" &&
     currentDirection !== "right"
   ) {
     leftMovement();
   } else if (
-    e.target.id === "right_arrow" &&
+    arrowSelected === "right_arrow" &&
     currentDirection !== "right" &&
     currentDirection !== "left"
   ) {
     rightMovement();
   } else if (
-    e.target.id === "up_arrow" &&
+    arrowSelected === "up_arrow" &&
     currentDirection !== "up" &&
     currentDirection !== "down"
   ) {
     upMovement();
   } else if (
-    e.target.id === "down_arrow" &&
+    arrowSelected === "down_arrow" &&
     currentDirection !== "down" &&
     currentDirection !== "up"
   ) {
@@ -590,13 +608,8 @@ const gamePlay = function () {
 
 ///////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////
-// Start button clicked
-startBtn.addEventListener("click", function () {
-  gamePlay();
-  updateScores();
-  // hide menu overlay
-  boardOverlay.style.display = "none";
-});
+// Start game
+gamePlay();
 
 //Immediately update scores
 updateScores();

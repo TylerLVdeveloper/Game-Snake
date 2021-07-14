@@ -59,28 +59,23 @@ body {
   border: 1px solid white;
 }
 
-#start_btn_container {
+#start_msg_container {
   position: relative;
   width: 100%;
   float: left;
-  margin-bottom: 25%;
+  margin-bottom: 10%;
   text-align: center;
 }
 
-#start_btn {
+#start_msg {
   width: 50%;
   height: auto;
   margin-left: auto;
   margin-right: auto;
   padding: 1%;
   border-radius: 5%;
-  font-size: 3.5vw;
+  font-size: 2vw;
   transition: background-color 0.8s;
-}
-
-#start_btn:hover {
-  background-color: green;
-  cursor: pointer;
 }
 
 #board {
@@ -188,12 +183,12 @@ body {
     font-size: 6vw;
   }
 
-  #start_btn {
-    font-size: 15vw;
+  #start_msg {
+    font-size: 6vw;
   }
 
-  #start_btn_container {
-    margin-bottom: 15%;
+  #start_msg_container {
+    margin-bottom: 10%;
   }
 
   .menu_title {
@@ -287,7 +282,7 @@ body {
   }
 }
 
-/* @media only screen and (min-width: 601px) and (max-width: 1200px) {
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
   #board {
     box-shadow: none;
   }
@@ -315,11 +310,11 @@ body {
     font-size: 3vw;
   }
 
-  #start_btn {
-    font-size: 8vw;
+  #start_msg {
+    font-size: 5vw;
   }
 
-  #start_btn_container {
+  #start_msg_container {
     margin-bottom: 15%;
   }
 
@@ -412,4 +407,4 @@ body {
   .arrow:active {
     background-color: rgb(80, 80, 80);
   }
-} */
+}
